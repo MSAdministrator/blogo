@@ -59,15 +59,15 @@ jobs:
         if: steps.check-version.outputs.tag
         uses: pypa/gh-action-pypi-publish@v1.5.0
         with:
-          user: __token__
-          password: ${{ secrets.PYPI_TOKEN }}
+          user: ${{ secrets.PYPI_USERNAME }}
+          password: ${{ secrets.PYPI_PASSWORD }}
 
       - name: Publish package on TestPyPI
         if: "! steps.check-version.outputs.tag"
         uses: pypa/gh-action-pypi-publish@v1.5.0
         with:
-          user: __token__
-          password: ${{ secrets.TEST_PYPI_TOKEN }}
+          user: ${{ secrets.PYPI_USERNAME }}
+          password: ${{ secrets.PYPI_PASSWORD }}
           repository_url: https://test.pypi.org/legacy/
 
       - name: Publish the release notes
