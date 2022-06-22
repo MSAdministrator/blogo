@@ -1,0 +1,17 @@
+{
+  "_copy_without_render": [
+    ".github/workflows/pre-commit.yml",
+    ".github/workflows/tests.yml"
+  ],
+  "_template": "gh:msadministrator/cookiecutter-hypermodern-python",
+  "author": "Josh Rickard",
+  "copyright_year": "2022",
+  "development_status": "Development Status :: 1 - Planning",
+  "email": "rickardja@live.com",
+  "friendly_name": "Blogo",
+  "github_user": "MSAdministrator",
+  "license": "MIT",
+  "package_name": "blogo",
+  "project_name": "blogo",
+  "version": "0.0.1"
+}
