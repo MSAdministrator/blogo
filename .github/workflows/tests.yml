@@ -72,8 +72,8 @@ jobs:
           nox --python=${{ matrix.python }}
   tests:
     needs: code-quality
-    name: ${{"{{"}} matrix.session {{"}}"}} ${{"{{"}} matrix.python {{"}}"}} / ${{"{{"}} matrix.os {{"}}"}}
-    runs-on: ${{"{{"}} matrix.os {{"}}"}}
+    name: ${{ matrix.session }} / ${{ matrix.python }} / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
@@ -94,7 +94,7 @@ jobs:
           - { python: "3.10", os: "ubuntu-latest", session: "docs-build" }
 
     env:
-      NOXSESSION: ${{"{{"}} matrix.session {{"}}"}}
+      NOXSESSION: ${{ matrix.session }}
       FORCE_COLOR: "1"
       PRE_COMMIT_COLOR: "always"
 
@@ -102,10 +102,10 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v3
 
-      - name: Set up Python ${{"{{"}} matrix.python {{"}}"}}
+      - name: Set up Python ${{ matrix.python }}
         uses: actions/setup-python@v4
         with:
-          python-version: ${{"{{"}} matrix.python {{"}}"}}
+          python-version: ${{ matrix.python }}
 
       - name: Upgrade pip
         run: |
@@ -134,7 +134,7 @@ jobs:
 
       - name: Run Nox
         run: |
-          nox --python=${{"{{"}} matrix.python {{"}}"}}
+          nox --python=${{ matrix.python }}
 
       - name: Upload coverage data
         if: always() && matrix.session == 'tests'
