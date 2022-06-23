@@ -1,13 +1,33 @@
-from tkinter import *
-from tkinter import font, filedialog
+# Copyright: (c) 2022, MSAdministrator <rickardja@live.com>
+# MIT License (see LICENSE or https://opensource.org/licenses/MIT)
+
+from tkinter import BOTH
+from tkinter import END
+from tkinter import LEFT
+from tkinter import RIGHT
+from tkinter import Frame
+from tkinter import Menu
+from tkinter import Text
+from tkinter import filedialog
+from tkinter import font
 from tkinter import messagebox as mbox
+
 from markdown2 import Markdown
 from tkhtmlview import HTMLLabel
 
 
 class Editor(Frame):
+    """Creates a blogo post editor using tkinter."""
 
     def __init__(self, master=None, title=None, path=None, directory=None):
+        """Creates an instance of a markdown file editor for blogo posts.
+
+        Args:
+            master (Tk, optional): A Tk object to create a window frame for. Defaults to None.
+            title (str, optional): The title of the blog to edit. Defaults to None.
+            path (str, optional): The path to the blog file to edit. Defaults to None.
+            directory (str, optional): The path to a the directory containing blogs. Defaults to None.
+        """
         self.title = title
         self.path = path
         self.directory = directory
@@ -16,17 +36,13 @@ class Editor(Frame):
         self.init_window()
 
     def init_window(self):
-        BLOGO_FONT = font.Font(
-            family="Helvetica",
-            size="14"
-        )
+        """Creates the initial editor window frame."""
+        blogo_font = font.Font(family="Helvetica", size="14")
         self.master.title(self.title if self.title else "Blogo")
         self.pack(fill=BOTH, expand=1)
-        self.input_editor = Text(self, width="1", font=BLOGO_FONT)
+        self.input_editor = Text(self, width="1", font=blogo_font)
         self.input_editor.pack(fill=BOTH, expand=1, side=LEFT)
-        self.output_box = HTMLLabel(
-            self, width="1", background="white", html=f"<h1>{self.title}</h1>"
-        )
+        self.output_box = HTMLLabel(self, width="1", background="white", html=f"<h1>{self.title}</h1>")
         self.output_box.pack(fill=BOTH, expand=1, side=RIGHT)
         self.output_box.fit_height()
         self.input_editor.bind("<<Modified>>", self.on_input_change)
@@ -40,49 +56,39 @@ class Editor(Frame):
         self.master.config(menu=self.mainmenu)
 
     def on_input_change(self, event):
+        """Callback used when input changes in the editor."""
         self.input_editor.edit_modified(0)
         md2html = Markdown()
-        markdownText = self.input_editor.get("1.0", END)
-        html = md2html.convert(markdownText)
+        markdown_text = self.input_editor.get("1.0", END)
+        html = md2html.convert(markdown_text)
         self.output_box.set_html(html)
 
     def open_file(self):
+        """Creates an open file dialog option."""
         open_file_name = filedialog.askopenfilename(
-            filetypes=(
-                ("Markdown File", "*.md , *.mdown , *.markdown"),
-                ("Text File", "*.txt"),
-                ("All Files", "*.*")
-            )
+            filetypes=(("Markdown File", "*.md , *.mdown , *.markdown"), ("Text File", "*.txt"), ("All Files", "*.*"))
         )
         if open_file_name:
             try:
                 self.input_editor.delete(1.0, END)
                 self.input_editor.insert(END, open(open_file_name).read())
-            except:
+            except Exception as e:
                 mbox.showerror(
-                    "Error Opening Selected File" , 
-                    f"Oops!, The file you selected : {open_file_name} can not be opened!"
+                    "Error Opening Selected File", f"Oops!, The file you selected : {open_file_name} can not be opened!"
                 )
 
     def save_file(self):
-        from pathlib import Path
-        filedata = self.input_editor.get("1.0" , END)
+        """Creates a save file dialog option."""
+        filedata = self.input_editor.get("1.0", END)
         save_file_name = filedialog.asksaveasfilename(
-           # parent=self,
-            filetypes = (
-                ("Markdown File", "*.md"),
-                ("Text File", "*.txt")
-            ), 
+            filetypes=(("Markdown File", "*.md"), ("Text File", "*.txt")),
             title="Save Markdown File",
             initialfile=self.path,
-            initialdir=self.directory if not self.path else None
+            initialdir=self.directory if not self.path else None,
         )
         if save_file_name:
             try:
-                f = open(save_file_name , "w")
+                f = open(save_file_name, "w")
                 f.write(filedata)
-            except:
-                mbox.showerror(
-                    "Error Saving File" , 
-                    f"Oops!, The File : {save_file_name} can not be saved!"
-                )
+            except Exception as e:
+                mbox.showerror("Error Saving File", f"Oops!, The File : {save_file_name} can not be saved!")
