@@ -1,12 +1,12 @@
 """Command-line interface."""
-import click
+import fire
+
+from .blogo import Blogo
 
 
-@click.command()
-@click.version_option()
-def main() -> None:
-    """Blogo."""
+def main():
+    fire.Fire(Blogo)
 
 
 if __name__ == "__main__":
-    main(prog_name="blogo")  # pragma: no cover
+    main()
