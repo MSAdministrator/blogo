@@ -21,7 +21,11 @@
 
 ## Features
 
-- TODO
+- Save your blogo configuration and generated markdown files in a repository (preferably named blog)
+- Add new blog posts
+- Edit blog posts (soon)
+
+- Enables the creation of blog content for GitHub pages
 
 ## Requirements
 
@@ -38,6 +42,12 @@ $ pip install blogo
 ## Usage
 
 Please see the [Command-line Reference] for details.
+
+blogo new blog
+blogo new post
+blogo update post
+blogo generate --deploy
+blogo deploy
 
 ## Contributing
 
