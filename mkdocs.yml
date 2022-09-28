@@ -1,0 +1,63 @@
+site_name: aqueduct
+site_description: A Swimlane content delivery system written in Python
+docs_dir: docs
+theme:
+  name: 'material'
+nav:
+    - Home: 'index.md'
+    - Components: 
+      - 'Aqueduct': 'aqueduct.md'
+      - 'Applications': 'components/applications.md'
+      - 'Assets': 'components/assets.md'
+      - 'Dashboards': 'components/dashboards.md'
+      - 'Groups': 'components/groups.md'
+      - 'Keystore': 'components/keystore.md'
+      - 'Packages': 'components/packages.md'
+      - 'Plugins': 'components/plugins.md'
+      - 'Reports': 'components/reports.md'
+      - 'Roles': 'components/roles.md'
+      - 'Tasks': 'components/tasks.md'
+      - 'Users': 'components/users.md'
+      - 'Workflows': 'components/workflows.md'
+      - 'Workspaces': 'components/workspaces.md'
+    - Models: 
+      - 'Application': 'model/application.md'
+      - 'Asset': 'model/asset.md'
+      - 'Dashboard': 'model/dashboard.md'
+      - 'Group': 'model/group.md'
+      #- 'Keystore': 'model/keystore.md'
+      - 'Package': 'model/package.md'
+      - 'Plugin': 'model/plugin.md'
+      - 'Report': 'model/report.md'
+      - 'Role': 'model/role.md'
+      - 'Task': 'model/task.md'
+      - 'User': 'model/user.md'
+      - 'Workflow': 'model/workflow.md'
+      - 'Workspace': 'model/workspace.md'
+
+    - Code Reference:
+        'Aqueduct': 'aqueduct-ref.md'
+        'Data Models': 'models-ref.md'
+    - About:
+        - 'License': 'LICENSE.md'
+        - 'Contributing': 'CONTRIBUTING.md'
+        - 'Changelog': 'CHANGELOG.md'
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          selection:
+            filters:
+              - "!^__getstate__$"
+              - "!^__ne__$"
+              - "!^__repr__$"
+              - "!^__setstate__$"
+              - "!^__eq__$"  # exlude all members starting with _
+              - "!^__attrs_post_init__$"
+              - "^__init__$"  # but always include __init__ modules and methods
+  - mike:
+      version_selector: true
+extra:
+  version:
+    provider: mike

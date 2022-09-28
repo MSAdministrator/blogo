@@ -60,7 +60,7 @@ class Blog:
     author: AnyStr = field(metadata={"question": Template("What is the authors name? ")})
     github_username: AnyStr = field(metadata={"question": Template("What is your GitHub username? ")})
 
-    theme: AnyStr = field(default="furo", metadata={"question": Template("Which theme do you want to use? ")})
+    theme: AnyStr = field(default="mkdocs-material", metadata={"question": Template("Which theme do you want to use? ")})
     cname: AnyStr = field(
         default=None, metadata={"question": Template("Please provide a CNAME if needed. If not then leave blank. ")}
     )
@@ -69,6 +69,7 @@ class Blog:
     directory: DirectoryPath = field(
         default="./blog", metadata={"question": Template("Where should content be saved to? (default is ./blog/ ")}
     )
+    github_pages_directory: DirectoryPath = field(factory=str)
 
     def __attrs_post_init__(self):
         """Used to force object types."""
@@ -82,3 +83,4 @@ class Blog:
             self.posts = return_list
         if self.directory:
             self.directory = os.path.abspath(os.path.expanduser(os.path.expandvars(self.directory)))
+        self.github_pages_directory = os.path.abspath(os.path.expanduser(os.path.expandvars(f"{self.github_username}.github.io")))

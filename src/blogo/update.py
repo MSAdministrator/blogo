@@ -5,8 +5,8 @@ from tkinter import Tk
 
 from .base import Base
 from .editor import Editor
-from .utils.exceptions import ConfigurationNotFound
-from .utils.exceptions import IncorrectParameters
+from .utils.exceptions import ConfigurationNotFoundError
+from .utils.exceptions import IncorrectParametersError
 
 
 class Update(Base):
@@ -29,9 +29,9 @@ class Update(Base):
             str: Returns the path of a blogo post
         """
         if not self._blog:
-            raise ConfigurationNotFound("Unable to load your blogo configuration.")
+            raise ConfigurationNotFoundError("Unable to load your blogo configuration.")
         if not self._blog.posts:
-            raise IncorrectParameters("There are not blog posts to update. Please create one first.")
+            raise IncorrectParametersError("There are not blog posts to update. Please create one first.")
         selected_post = self._prompt_options(
             title="Select post to update: ", options=[x.title for x in self._blog.posts]
         )

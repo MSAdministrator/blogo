@@ -28,6 +28,9 @@ class Blogo(Base):
     @property
     def generate(self):
         """Gives access to generate blogo content for GitHub pages."""
+        from .generate import Generate
+
+        return Generate().now
         raise NotImplementedError("Generate is currently not implemented")
 
     @property

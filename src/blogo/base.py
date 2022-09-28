@@ -48,6 +48,14 @@ class Base(metaclass=LoggingBase):
         options, index = pick(options, title)
         return options
 
+    def _create_folder(self, name):
+        from .files import is_path_exists_or_creatable
+
+        if is_path_exists_or_creatable(self.get_abs_path(name)):
+            if not os.path.exists(self.get_abs_path(name)):
+                os.makedirs(self.get_abs_path(name))
+        return self.get_abs_path(name)
+
     def _write_to_disk(self, name, data):
         """Writes values to a local disk.
 
